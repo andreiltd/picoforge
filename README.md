@@ -16,6 +16,7 @@ This project builds a freestanding C++ standard library suitable for hypervisors
 - `cmake` and `ninja` for LLVM
 - `git` for downloading sources
 - `just` command runner
+- `ccache` speed up clean builds
 
 ## Quick Start
 

@@ -42,6 +42,8 @@ configure:
         -DLLVM_RUNTIME_TARGETS="{{target}}" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="{{llvm_install_dir}}" \
+        -DCMAKE_C_COMPILER_LAUNCHER="ccache" \
+        -DCMAKE_CXX_COMPILER_LAUNCHER="ccache" \
         \
         -DRUNTIMES_{{target}}_COMPILER_RT_BAREMETAL_BUILD=ON \
         -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_LIBFUZZER=OFF \
@@ -84,12 +86,12 @@ configure:
 # Build LLVM libcxx
 build: configure
     @echo "Building LLVM libcxx..."
-    ninja -C {{llvm_build_dir}}
+    ninja -C {{llvm_build_dir}} runtimes
 
 # Install LLVM libcxx
 install: build
     @echo "Installing LLVM libcxx..."
-    ninja -C {{llvm_build_dir}} install
+    ninja -C {{llvm_build_dir}} install-runtimes
 
 # Clean LLVM build cache
 clean:

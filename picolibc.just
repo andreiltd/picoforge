@@ -13,7 +13,7 @@ target := "x86_64-unknown-none"
 configure:
     @echo "Configuring picolibc..."
     @mkdir -p {{picolibc_install_dir}}
-    meson setup {{picolibc_build_dir}} {{source_dir}} \
+    meson setup --wipe {{picolibc_build_dir}} {{source_dir}} \
         --cross-file={{base_dir}}/cross-{{target}}.txt \
         --buildtype=release \
         -Dprefix={{picolibc_install_dir}} \
