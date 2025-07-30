@@ -19,12 +19,12 @@ configure:
         -Dprefix={{picolibc_install_dir}} \
         -Dmultilib=false \
         -Dformat-default=minimal \
-        -Dio-c99-formats=false \
         -Dposix-console=false \
         -Dprintf-aliases=false \
         -Dpicocrt=false \
         -Dinitfini-array=false \
         -Dsingle-thread=true \
+        -Denable-malloc=false \
         -Dnewlib-nano-malloc=false \
         -Dthread-local-storage=false \
         -Dnewlib-global-errno=true \
@@ -32,7 +32,7 @@ configure:
         -Dsemihost=false \
         -Dspecsdir=none \
         -Dtinystdio=true \
-        -Dio-c99-formats=true \
+        -Dio-c99-formats=false \
         -Dio-wchar=true \
         -Dfreestanding=true
 

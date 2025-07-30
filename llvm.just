@@ -38,7 +38,7 @@ configure:
     @mkdir -p {{install_dir}}
     cmake -G Ninja -S {{source_dir}}/llvm -B {{llvm_build_dir}} \
         -DLLVM_ENABLE_PROJECTS="clang" \
-        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
+        -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind;compiler-rt" \
         -DLLVM_RUNTIME_TARGETS="{{target}}" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="{{llvm_install_dir}}" \
@@ -46,11 +46,19 @@ configure:
         -DCMAKE_CXX_COMPILER_LAUNCHER="ccache" \
         \
         -DRUNTIMES_{{target}}_COMPILER_RT_BAREMETAL_BUILD=ON \
+        -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_BUILTINS=ON \
         -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_LIBFUZZER=OFF \
         -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_PROFILE=OFF \
         -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_SANITIZERS=OFF \
         -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_XRAY=OFF \
+        -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_MEMPROF=OFF \
+        -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_CTX_PROFILE=OFF \
         -DRUNTIMES_{{target}}_COMPILER_RT_DEFAULT_TARGET_ONLY=ON \
+        -DRUNTIMES_{{target}}_COMPILER_RT_CAN_EXECUTE_TESTS=OFF \
+        -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_GWP_ASAN=OFF \
+        -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_CRT=OFF \
+        -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_ORC=OFF \
+        -DRUNTIMES_{{target}}_COMPILER_RT_OS_DIR="" \
         \
         -DRUNTIMES_{{target}}_LIBCXX_ADDITIONAL_COMPILE_FLAGS="{{cxx_compile_flags}}" \
         -DRUNTIMES_{{target}}_LIBCXXABI_ADDITIONAL_COMPILE_FLAGS="{{cxx_compile_flags}}" \

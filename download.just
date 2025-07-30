@@ -5,7 +5,7 @@ tempdir := "/tmp"
 
 # Version configuration
 llvm_version := "llvmorg-21.1.0-rc1"
-picolibc_version := "1.8.10-2"
+picolibc_version := "main"
 
 # Repository URLs
 llvm_repo := "https://github.com/llvm/llvm-project.git"
