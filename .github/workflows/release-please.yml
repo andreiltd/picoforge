@@ -61,7 +61,7 @@ jobs:
       - name: Install LLVM and Clang
         uses: KyleMayes/install-llvm-action@a7a1a882e2d06ebe05d5bb97c3e1f8c984ae96fc # v2.0.7
         with:
-          version: "20.0"
+          version: "20.1.4"
 
       - name: Verify Build Tools
         run: |
@@ -79,7 +79,7 @@ jobs:
       - name: Verify Build Artifacts
         run: |
           # Fail if neither directory exists
-          if [ ! -d "dist/libc" ] && [ ! -d "dist/libcxx" ]; then
+          if [ ! -d "dist/libc" ] || [ ! -d "dist/libcxx" ]; then
             echo "Error: No build artifacts found in dist/"
             exit 1
           fi
