@@ -24,7 +24,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: simple
-          package-name: baremetal-toolchain
 
   build-and-publish:
     needs: release-please
