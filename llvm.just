@@ -1,18 +1,23 @@
 # Directory configuration
 base_dir := justfile_directory()
-downloads_dir := base_dir / "downloads"
-install_dir := base_dir / "install"
+install_dir := base_dir / "dist"
 
 clang_ver := "21"
 
 # LLVM-specific directories
-source_dir := downloads_dir / "llvm-project"
+source_dir := "src/llvm-project"
 llvm_build_dir := base_dir / "build-llvm"
 llvm_install_dir := install_dir / "libcxx"
 picolibc_install_dir := install_dir / "libc"
 builtin_incs_dir := llvm_build_dir + "/lib/clang/" + clang_ver + "/include"
 
 target := "x86_64-unknown-none"
+
+ccache_flags := if `command -v ccache >/dev/null 2>&1; echo $?` == "0" {
+    "-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+} else {
+    ""
+}
 
 # Explicit macro definitions to avoid warnings
 disabled_features := "-D_FORTIFY_SOURCE=0" + \
@@ -26,7 +31,7 @@ disabled_features := "-D_FORTIFY_SOURCE=0" + \
 enabled_features := "-D_GNU_SOURCE=1;-D_POSIX_C_SOURCE=200809L"
 
 # Common compile flags
-base_flags := "-ffreestanding;-nostdinc;-Wno-c++11-narrowing"
+base_flags := "-ffreestanding;-nostdinc;-Wno-c++11-narrowing;-fno-stack-protector;-mno-red-zone"
 include_flags := "-I" + picolibc_install_dir + "/include" + ";-I" + builtin_incs_dir
 compile_flags := enabled_features + ";" + disabled_features + ";" + base_flags + ";" + include_flags
 c_compile_flags := compile_flags + ";-nostdinc"
@@ -37,13 +42,12 @@ configure:
     @echo "Configuring LLVM libcxx..."
     @mkdir -p {{install_dir}}
     cmake -G Ninja -S {{source_dir}}/llvm -B {{llvm_build_dir}} \
+        {{ccache_flags}} \
         -DLLVM_ENABLE_PROJECTS="clang" \
         -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind;compiler-rt" \
         -DLLVM_RUNTIME_TARGETS="{{target}}" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="{{llvm_install_dir}}" \
-        -DCMAKE_C_COMPILER_LAUNCHER="ccache" \
-        -DCMAKE_CXX_COMPILER_LAUNCHER="ccache" \
         \
         -DRUNTIMES_{{target}}_COMPILER_RT_BAREMETAL_BUILD=ON \
         -DRUNTIMES_{{target}}_COMPILER_RT_BUILD_BUILTINS=ON \
@@ -117,19 +121,19 @@ reconfigure: clean configure
 
 # Show LLVM status
 status:
-    @echo "=== LLVM Status ==="
+    @echo "{{BOLD + CYAN}}=== LLVM Status ==={{NORMAL}}"
     @if [ -d "{{source_dir}}" ]; then \
-        echo "✓ Source: {{source_dir}}"; \
+        echo "{{GREEN}}✓{{NORMAL}} Source: {{source_dir}}"; \
     else \
-        echo "✗ Source missing"; \
+        echo "{{RED}}✗{{NORMAL}} Source missing"; \
     fi
     @if [ -d "{{llvm_build_dir}}" ]; then \
-        echo "✓ Build: {{llvm_build_dir}}"; \
+        echo "{{GREEN}}✓{{NORMAL}} Build: {{llvm_build_dir}}"; \
     else \
-        echo "✗ Build not configured"; \
+        echo "{{YELLOW}}✗{{NORMAL}} Build not configured"; \
     fi
     @if [ -d "{{llvm_install_dir}}" ]; then \
-        echo "✓ Install: {{llvm_install_dir}}"; \
+        echo "{{GREEN}}✓{{NORMAL}} Install: {{llvm_install_dir}}"; \
     else \
-        echo "✗ Not installed"; \
+        echo "{{RED}}✗{{NORMAL}} Not installed"; \
     fi

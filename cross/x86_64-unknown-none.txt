@@ -23,7 +23,9 @@ c_args = [
   '-fstack-clash-protection',
   '-mstack-probe-size=4096',
   '-mno-red-zone',
-  '-mcmodel=kernel']
+  '-DABORT_PROVIDED=1',
+  '-DDEFINE_MEMALIGN=1',
+  '-DDEFINE_POSIX_MEMALIGN=1']
 
 [properties]
 needs_exe_wrapper = true

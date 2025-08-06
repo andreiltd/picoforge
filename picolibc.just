@@ -1,9 +1,8 @@
 base_dir := justfile_directory()
-downloads_dir := base_dir / "downloads"
-install_dir := base_dir / "install"
+install_dir := base_dir / "dist"
 
 # Picolibc-specific directories
-source_dir := downloads_dir / "picolibc"
+source_dir := "src/picolibc"
 picolibc_build_dir := base_dir / "build-picolibc"
 picolibc_install_dir := install_dir / "libc"
 
@@ -14,7 +13,7 @@ configure:
     @echo "Configuring picolibc..."
     @mkdir -p {{picolibc_install_dir}}
     meson setup --wipe {{picolibc_build_dir}} {{source_dir}} \
-        --cross-file={{base_dir}}/cross-{{target}}.txt \
+        --cross-file={{base_dir}}/cross/{{target}}.txt \
         --buildtype=release \
         -Dprefix={{picolibc_install_dir}} \
         -Dmultilib=false \
@@ -22,7 +21,7 @@ configure:
         -Dposix-console=false \
         -Dprintf-aliases=false \
         -Dpicocrt=false \
-        -Dinitfini-array=false \
+        -Dinitfini-array=true \
         -Dsingle-thread=true \
         -Denable-malloc=false \
         -Dnewlib-nano-malloc=false \
@@ -61,19 +60,19 @@ reconfigure: clean configure
 
 # Show picolibc status
 status:
-    @echo "=== Picolibc Status ==="
+    @echo "{{BOLD + CYAN}}=== Picolibc Status ==={{NORMAL}}"
     @if [ -d "{{source_dir}}" ]; then \
-        echo "✓ Source: {{source_dir}}"; \
+        echo "{{GREEN}}✓{{NORMAL}} Source: {{source_dir}}"; \
     else \
-        echo "✗ Source missing"; \
+        echo "{{RED}}✗{{NORMAL}} Source missing"; \
     fi
     @if [ -d "{{picolibc_build_dir}}" ]; then \
-        echo "✓ Build: {{picolibc_build_dir}}"; \
+        echo "{{GREEN}}✓{{NORMAL}} Build: {{picolibc_build_dir}}"; \
     else \
-        echo "✗ Build not configured"; \
+        echo "{{YELLOW}}✗{{NORMAL}} Build not configured"; \
     fi
     @if [ -d "{{picolibc_install_dir}}" ]; then \
-        echo "✓ Install: {{picolibc_install_dir}}"; \
+        echo "{{GREEN}}✓{{NORMAL}} Install: {{picolibc_install_dir}}"; \
     else \
-        echo "✗ Not installed"; \
+        echo "{{RED}}✗{{NORMAL}} Not installed"; \
     fi

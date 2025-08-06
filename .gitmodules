@@ -1,0 +1,8 @@
+[submodule "src/llvm-project"]
+	path = src/llvm-project
+	url = https://github.com/llvm/llvm-project.git
+	shallow = true
+[submodule "src/picolibc"]
+	path = src/picolibc
+	url = https://github.com/picolibc/picolibc.git
+	shallow = true
