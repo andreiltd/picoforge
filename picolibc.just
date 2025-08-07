@@ -17,7 +17,7 @@ configure:
         --buildtype=release \
         -Dprefix={{ picolibc_install_dir }} \
         -Dmultilib=false \
-        -Dformat-default=minimal \
+        -Dformat-default=double \
         -Dposix-console=false \
         -Dprintf-aliases=false \
         -Dpicocrt=false \
