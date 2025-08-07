@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/andreiltd/picoforge/compare/v0.1.4...v0.1.5) (2025-08-07)
+
+
+### Features
+
+* install gcc-multilib ([54ddbca](https://github.com/andreiltd/picoforge/commit/54ddbca4c7d5803f6680cc58d3adab44c4ea1290))
+
 ## [0.1.4](https://github.com/andreiltd/picoforge/compare/v0.1.3...v0.1.4) (2025-08-07)
 
 
