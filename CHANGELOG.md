@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/andreiltd/picoforge/compare/v0.1.3...v0.1.4) (2025-08-07)
+
+
+### Features
+
+* install multilib ([61f7679](https://github.com/andreiltd/picoforge/commit/61f76795df66d9dad14afe3beeedc79e9daf256c))
+
 ## [0.1.3](https://github.com/andreiltd/picoforge/compare/v0.1.2...v0.1.3) (2025-08-07)
 
 
