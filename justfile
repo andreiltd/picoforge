@@ -16,25 +16,25 @@ init-submodules:
 # Setup directories
 setup:
     @echo "Setting up build environment..."
-    mkdir -p {{install_dir}}
+    mkdir -p {{ install_dir }}
 
-[private]
 [confirm('proceed?')]
+[private]
 do-clean:
     @echo "Cleaning all build artifacts..."
-    rm -rf {{install_dir}}
+    rm -rf {{ install_dir }}
     rm -rf build-picolibc
     rm -rf build-llvm
 
 # Clean everything
 cleanall: && do-clean
-    @echo "This will remove {{install_dir}} and all build directories."
+    @echo "This will remove {{ install_dir }} and all build directories."
 
 # Show status of all components
 status:
     @echo "=== Build Environment Status ==="
-    @echo "Base directory: {{base_dir}}"
-    @echo "Install: {{install_dir}}"
+    @echo "Base directory: {{ base_dir }}"
+    @echo "Install: {{ install_dir }}"
     @echo ""
     just picolibc::status
     @echo ""

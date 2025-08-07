@@ -35,6 +35,9 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@63069e3931dedbf3b63792097479563182fe70d1 # v.1.2.18
+
       - name: Install Just
         uses: taiki-e/install-action@just
 
