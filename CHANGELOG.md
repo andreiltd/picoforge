@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/andreiltd/picoforge/compare/v0.1.2...v0.1.3) (2025-08-07)
+
+
+### Features
+
+* use base compile flags for compiler-rt ([8fade9d](https://github.com/andreiltd/picoforge/commit/8fade9df98eb10331009c5c591286421f0a8ee53))
+
 ## [0.1.2](https://github.com/andreiltd/picoforge/compare/v0.1.1...v0.1.2) (2025-08-06)
 
 
